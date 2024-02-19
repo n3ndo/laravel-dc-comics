@@ -14,7 +14,11 @@
                         @foreach ($comics as $comic)
                             <div class="comics-card">
                                 <a href="{{ route('comics.show', ['comic' => $comic->id]) }}">
-                                    <img class="img-fluid" src="{{ $comic['thumb'] }}" alt="">
+                                    @if($comic->thumb == null)
+                                        <img class="img-fluid" src="{{ Vite::asset('resources/img/placeholder_comic.png') }}" alt="">
+                                    @else
+                                        <img class="img-fluid" src="{{ $comic['thumb'] }}" alt="">
+                                    @endif
                                     <h3>{{ $comic['series'] }}</h3>
                                 </a>
                             </div>
@@ -22,8 +26,13 @@
                     </div>
                 </div>
             </div>
-            <div class="text-center py-4">
-                <button class="btn btn-primary btn-lg text-uppercase">load more</button>
+            <div class="d-flex justify-content-center">
+                <div class="text-center py-4">
+                    <button class="btn btn-primary btn-lg text-uppercase">load more</button>
+                </div>
+                <div class="text-center py-4 ps-2">
+                    <a href="{{ route('comics.create')}}" class="btn btn-success btn-lg text-uppercase">add a comic</a>
+                </div>
             </div>
         </div>
         <div class="bottom-main">
