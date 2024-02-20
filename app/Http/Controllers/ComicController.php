@@ -38,6 +38,31 @@ class ComicController extends Controller
     {
         $form_data = $request->all();
 
+        $validatedData = $request->validate([
+            'title' => 'required|string|max:30|min:3',
+            'description' => 'required|string|max:255',
+            'thumb' => 'max:255',
+            'price' => 'required|numeric',
+            'series' => 'required|string',
+            'sale_date' => 'required|date',
+            'type' => 'required|string|max:40|min:2',
+        ], [
+            'title.required' => 'Il titolo è obbligatorio.',
+            'title.max' => 'Il titolo deve essere di massimo  30 caratteri.',
+            'title.min' => 'Il titolo deve essere di minimo  3 caratteri.',
+            'description.required' => 'La descrizione è obbligatoria.',
+            'description.max' => 'La descrizione deve essere di massimo 255 caratteri.',
+            'thumb.max' => 'L\'immagine deve essere di massimo 255 caratteri.',
+            'price.required' => 'Il prezzo è obbligatorio.',
+            'price.numeric' => 'Il prezzo deve essere un numero.',
+            'series.required' => 'La serie è obbligatoria.',
+            'sale_date.required' => 'La data di vendita è obbligatoria.',
+            'sale_date.date' => 'La data di vendita non è valida.',
+            'type.required' => 'Il tipo è obbligatorio.',
+            'type.max' => 'Il tipo deve essere di massimo 40 caratteri.',
+            'type.min' => 'Il tipo deve essere di minimo 2 caratteri.',
+        ]);
+
         $comic = new Comic();
         $comic->title = $form_data['title'];
         $comic->description = $form_data['description'];
