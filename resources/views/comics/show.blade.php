@@ -9,7 +9,11 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-4">
-                        <img class="img-fluid" src="{{ asset($comic['thumb'])}}" alt="">
+                        @if($comic->thumb == null)
+                        <img class="img-fluid" src="{{ Vite::asset('resources/img/placeholder_comic.png') }}" alt="">
+                    @else
+                        <img class="img-fluid" src="{{ $comic['thumb'] }}" alt="">
+                    @endif
                     </div>
                     <div class="col-md-8 py-3">
                         <div class="d-flex-justify-content-between algn-items-center">
@@ -24,7 +28,11 @@
                             <div class="fw-bold">AVAILABLE</div>
                         </div>
                         <div class="py-3">{{ $comic['description'] }}</div>
-    
+                        <form action="{{ route('comics.destroy', $comic->id) }}" method="post">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger float-end my-3" onclick="return confirm('Sei sicuro di voler eliminare questo fumetto?')">Elimina</button>
+                        </form>
                     </div>
                 </div>
             </div>
